@@ -3,9 +3,10 @@
 
 #include <SDL2/SDL.h>
 
+#include "utils/p_math.h"
+
 int main(int argc, char** argv)
 {
-    printf("Hello WORLD !\n");
 
     return 0;
 }
