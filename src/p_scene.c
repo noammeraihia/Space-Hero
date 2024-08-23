@@ -58,7 +58,6 @@ void pRenderSectorWall(_pWindow *__window, _pSector *__sectors, _pVec3f __wallsP
 }
 */
 
-
 void pRenderSectorWall(_pWindow *__window, _pSector *__sectors, f32 __w1x, f32 __w1y, f32 __w2x, f32 __w2y, f32 __w3y, f32 __w4y, _pRGBAColor __color, _pSectorSurface __surface)
 {
     i32 x, y;
@@ -227,24 +226,12 @@ void pRenderCamera(_pWindow *__window, _pCamera *__camera, _pSectorWall __walls[
                     pClipBehindSceneCamera(&wallsPoints[3], &wallsPoints[2]);
                 }
 
-                /*for (u8 i = 0; i < 4; i++)
+                for (u8 i = 0; i < 4; i++)
                 {
                     wallsPoints[i].x = wallsPoints[i].x * 200 / wallsPoints[i].y + ((f32)__window->rWidth / 2);
                     wallsPoints[i].y = wallsPoints[i].z * 200 / wallsPoints[i].y + ((f32)__window->rHeight / 2);
                 }
-                */
-               wallsPoints[0].x = wallsPoints[0].x * 200 / wallsPoints[0].y + ((f32)__window->rWidth / 2);
-               wallsPoints[1].x = wallsPoints[1].x * 200 / wallsPoints[1].y + ((f32)__window->rWidth / 2);
-
-               wallsPoints[0].y = wallsPoints[0].z * 200 / wallsPoints[0].y + ((f32)__window->rHeight / 2);
-               wallsPoints[1].y = wallsPoints[1].z * 200 / wallsPoints[1].y + ((f32)__window->rHeight / 2);
-               
-               wallsPoints[2].x = wallsPoints[2].x * 200 / wallsPoints[2].y + ((f32)__window->rWidth / 2);
-               wallsPoints[3].x = wallsPoints[3].x * 200 / wallsPoints[3].y + ((f32)__window->rWidth / 2);
-               
-               wallsPoints[2].y = wallsPoints[2].z * 200 / wallsPoints[2].y + ((f32)__window->rHeight / 2);
-               wallsPoints[3].y = wallsPoints[3].z * 200 / wallsPoints[3].y + ((f32)__window->rHeight / 2);
-
+                
                 pRenderSectorWall(__window, &__sectors[s], wallsPoints[0].x, wallsPoints[0].y, wallsPoints[1].x, wallsPoints[1].y, wallsPoints[2].y, wallsPoints[3].y, __walls[w].color, __sectors[s].surfaceType);
             }
             __sectors[s].distance /= (__sectors[s].wallsCount);
