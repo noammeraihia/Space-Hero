@@ -1,6 +1,6 @@
 #include "gfx/p_window.h"
 
-_pWindow pWindow(const char *__name, u16 __logicalWidth, u16 __logicalHeight, u16 __width, u16 __height, SDL_WindowFlags __wF, SDL_RendererFlags __rF)
+_pWindow pWindow(const char *__name, u16 __logicalWidth, u16 __logicalHeight, u16 __width, u16 __height, SDL_WindowFlags __wF, SDL_RendererFlags __rF, u16 __framerate)
 {
     printf("bloh");
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
@@ -18,8 +18,8 @@ _pWindow pWindow(const char *__name, u16 __logicalWidth, u16 __logicalHeight, u1
 
         .handle = NULL,
         .renderer = NULL,
-        .frameRate = 60,
-        .frameDelay = 1000 / 60,
+        .frameRate = __framerate,
+        .frameDelay = 1000 / __framerate,
         .isRunning = ptrue};
 
     window.handle = SDL_CreateWindow(__name, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, __width, __height, __wF);

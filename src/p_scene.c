@@ -1,62 +1,10 @@
 #include "p_scene.h"
 
-/*
-void pRenderSectorWall(_pWindow *__window, _pSector *__sectors, _pVec3f __wallsPoints[4], _pRGBAColor __color, _pSectorSurface __surface)
-{
-
-    i32 x, y;
-    i32 dyb = __wallsPoints[1].y - __wallsPoints[0].y;
-    i32 dyt = __wallsPoints[3].y - __wallsPoints[2].y;
-    i32 dx = (__wallsPoints[1].x - __wallsPoints[0].x != 0.f ? __wallsPoints[1].x - __wallsPoints[0].x : 1.f);
-    
-    i32 xs = __wallsPoints[0].x;
-
-    __wallsPoints[0].x = (__wallsPoints[0].x < 1.f ? 1.f : __wallsPoints[0].x);
-    __wallsPoints[1].x = (__wallsPoints[1].x < 1.f ? 1.f : __wallsPoints[1].x);
-    __wallsPoints[0].x = (__wallsPoints[0].x > __window->rWidth - 1 ? __window->rWidth - 1 : __wallsPoints[0].x);
-    __wallsPoints[1].x = (__wallsPoints[1].x > __window->rWidth - 1 ? __window->rWidth - 1 : __wallsPoints[1].x);
-
-    for (x = __wallsPoints[0].x; x < __wallsPoints[1].x; x++)
-    {
-        f32 y1 = dyb * (x - xs + 0.5f) / dx + __wallsPoints[0].y;
-        f32 y2 = dyt * (x - xs + 0.5f) / dx + __wallsPoints[2].y;
-
-        y1 = (y1 < 1.f ? 1.f : y1);
-        y2 = (y2 < 1.f ? 1.f : y2);
-        y1 = (y1 < __window->rHeight - 1 ? __window->rHeight - 1 : y1);
-        y2 = (y2 < __window->rHeight - 1 ? __window->rHeight - 1 : y2);
-
-        switch (__surface)
-        {
-        case P_SS_BOTTOM:
-            __sectors->surf[x] = y1;
-            break;
-
-        case P_SS_TOP:
-            __sectors->surf[x] = y2;
-            break;
-
-        case P_SS_RENDER_BOTTOM:
-            for (y = __sectors->surf[x]; y < y1; y++)
-                pRenderPixel(__window, P_VEC(_pVec2i, x, y), __sectors->bottomColor);
-            break;
-
-        case P_SS_RENDER_TOP:
-            for (y = y2; y < __sectors->surf[x]; y++)
-                pRenderPixel(__window, P_VEC(_pVec2i, x, y), __sectors->topColor);
-            break;
-
-        default:
-            break;
-        }
-
-        for (y = y1; y < y2; y++)
-        {
-            pRenderPixel(__window, P_VEC(_pVec2i, x, y), __color);
-        }
-    }
+static i32 sectorComparator(const void * __sector1, const void * __sector2 ) {
+    _pSector sector1 = * (const _pSector *) __sector1;
+    _pSector sector2 = * (const _pSector *) __sector2;
+    return (i32)(sector1.distance < sector2.distance);
 }
-*/
 
 void pRenderSectorWall(_pWindow *__window, _pSector *__sectors, f32 __w1x, f32 __w1y, f32 __w2x, f32 __w2y, f32 __w3y, f32 __w4y, _pRGBAColor __color, _pSectorSurface __surface)
 {
@@ -82,7 +30,12 @@ void pRenderSectorWall(_pWindow *__window, _pSector *__sectors, f32 __w1x, f32 _
         if (y2 < 1.f) { y2 = 1.f; }
         if (y1 > __window->rHeight - 1) { y1 = __window->rHeight - 1; }
         if (y2 > __window->rHeight - 1) { y2 = __window->rHeight - 1; }
-        /*
+
+        for (y = y1; y < y2; y++)
+        {
+            pRenderPixel(__window, P_VEC(_pVec2i, x, y), __color);
+        }
+
         switch (__surface)
         {
         case P_SS_BOTTOM:
@@ -95,37 +48,20 @@ void pRenderSectorWall(_pWindow *__window, _pSector *__sectors, f32 __w1x, f32 _
 
         case P_SS_RENDER_BOTTOM:
             for (y = __sectors->surf[x]; y < y1; y++)
-                pRenderPixel(__window, P_VEC(_pVec2i, x, y), __sectors->bottomColor);
+            {
+                pRenderPixel(__window, P_VEC(_pVec2i, x, y), P_RGBA(255, 255, 255, 255));
+            }
             break;
 
         case P_SS_RENDER_TOP:
             for (y = y2; y < __sectors->surf[x]; y++)
-                pRenderPixel(__window, P_VEC(_pVec2i, x, y), __sectors->topColor);
+            {
+                pRenderPixel(__window, P_VEC(_pVec2i, x, y), P_RGBA(255, 255, 255, 255));
+            }
             break;
 
         default:
             break;
-        }
-        */
-
-        if (__surface == P_SS_BOTTOM){__sectors->surf[x] = y1;}
-        if (__surface == P_SS_TOP){__sectors->surf[x] = y2;}
-        if (__surface == P_SS_RENDER_BOTTOM){
-            for (y = __sectors->surf[x]; y < y1; y++)
-            {
-                pRenderPixel(__window, P_VEC(_pVec2i, x, y), __sectors->bottomColor);
-            }
-        }
-        if (__surface == P_SS_RENDER_TOP){
-            for (y = y2; y < __sectors->surf[x]; y++)
-            {
-                pRenderPixel(__window, P_VEC(_pVec2i, x, y), __sectors->topColor);
-            }
-        }
-
-        for (y = y1; y < y2; y++)
-        {
-            pRenderPixel(__window, P_VEC(_pVec2i, x, y), __color);
         }
     }
 }
@@ -150,26 +86,14 @@ void pRenderCamera(_pWindow *__window, _pCamera *__camera, _pSectorWall __walls[
 {
     _pVec3f wallsPoints[4];
 
-    // Bubble sorting => TODO : upgrade this shi
-    for (i32 s = 0; s < __sectorsCount - 1; s++)
-    {
-        for (i32 w = 0; w < __sectorsCount - s - 1; w++)
-        {
-            if (__sectors[w].distance < __sectors[w + 1].distance)
-            {
-                _pSector tmpSector = __sectors[w];
-                __sectors[w] = __sectors[w + 1];
-                __sectors[w + 1] = tmpSector;
-            }
-        }
-    }
+   qsort(__sectors, 4, sizeof(_pSector), sectorComparator);
 
     for (i32 s = 0; s < __sectorsCount; s++)
     {
         __sectors[s].distance = 0;
-        if (__camera->position.z > __sectors[s].bottomHeight)
+        if (__camera->position.z > __sectors[s].topHeight)
             {__sectors[s].surfaceType = P_SS_BOTTOM; }
-        else if (__camera->position.z < __sectors[s].topHeight)
+        else if (__camera->position.z < __sectors[s].bottomHeight)
             {__sectors[s].surfaceType = P_SS_TOP; }
         else
             {__sectors[s].surfaceType = P_SS_NONE;}
@@ -368,6 +292,7 @@ _pScene pScene(_pVec3f __cameraPos)
             {
                 scene.sectors[s].surf[i] = 0;
             }
+            scene.sectors[s].surfaceType = P_SS_NONE;
         }
     }
 

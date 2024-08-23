@@ -6,7 +6,7 @@
 
 int main(int argc, char** argv)
 {
-    _pWindow window = pWindow("Project Padinspi", 160, 120, 640, 480, 0, 0);
+    _pWindow window = pWindow("Project Padinspi", 160, 120, 640, 480, 0, 0, 60);
     _pScene scene = pScene(P_VEC(_pVec3f, 70.f, -110.f, 20.f));
 
     while (window.isRunning)
