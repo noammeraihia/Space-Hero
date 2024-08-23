@@ -2,6 +2,9 @@
 #define P_MATH_H
 
 #include "utils/p_types.h"
+#include <math.h>
+
+#define P_PI 3.14159265358979f
 
 #define P_MATH_INIT_VECTOR_TYPE(__suffix, __type, ...)\
     typedef struct s_pVec##__suffix\
@@ -20,6 +23,7 @@
     _pVec##__suffix pDivV_v##__suffix(_pVec##__suffix __vector1, _pVec##__suffix __vector2);\
     \
     __type pDot_v##__suffix(_pVec##__suffix __vector1, _pVec##__suffix __vector2);\
+    f32 pDist_v##__suffix(_pVec##__suffix __vector1, _pVec##__suffix __vector2);\
 
 #define P_VEC(__type, ...) \
     (__type) { __VA_ARGS__ }

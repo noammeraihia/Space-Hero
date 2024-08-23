@@ -1,5 +1,5 @@
-#ifndef P_UTILS_h
-#define P_UTILS_h
+#ifndef P_TYPES_h
+#define P_TYPES_h
 
 #define ptrue 1
 #define pfalse 0
