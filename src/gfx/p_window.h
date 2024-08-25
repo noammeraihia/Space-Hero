@@ -4,7 +4,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <SDL2/SDL.h>
+#include <SDL3/SDL.h>
+#include <SDL3/SDL_main.h>
 
 #include "utils/p_utils.h"
 
@@ -26,7 +27,7 @@ typedef struct s_pWindow
 
 } _pWindow;
 
-_pWindow pWindow(const char *__name, u16 __logicalWidth, u16 __logicalHeight, u16 __width, u16 __height, SDL_WindowFlags __wF, SDL_RendererFlags __rF, u16 __framerate);
+_pWindow pWindow(const char *__name, u16 __logicalWidth, u16 __logicalHeight, u16 __width, u16 __height, SDL_WindowFlags __wF, u16 __framerate);
 void pFreeWindow(_pWindow *__window);
 
 b8 pWindowPollEvent(_pWindow *__window);

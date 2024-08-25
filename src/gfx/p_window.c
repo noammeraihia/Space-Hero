@@ -1,14 +1,12 @@
 #include "gfx/p_window.h"
 
-_pWindow pWindow(const char *__name, u16 __logicalWidth, u16 __logicalHeight, u16 __width, u16 __height, SDL_WindowFlags __wF, SDL_RendererFlags __rF, u16 __framerate)
+_pWindow pWindow(const char *__name, u16 __logicalWidth, u16 __logicalHeight, u16 __width, u16 __height, SDL_WindowFlags __wF, u16 __framerate)
 {
-    printf("bloh");
-    if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
+    if (SDL_Init(SDL_INIT_VIDEO) != 0)
     {
-        fprintf(stderr, "%s", SDL_GetError());
+        fprintf(stderr, "%s\n", SDL_GetError());
         return (_pWindow){0};
     }
-    printf("bleh");
 
     _pWindow window = {
         .rWidth = __logicalWidth,
@@ -22,21 +20,21 @@ _pWindow pWindow(const char *__name, u16 __logicalWidth, u16 __logicalHeight, u1
         .frameDelay = 1000 / __framerate,
         .isRunning = ptrue};
 
-    window.handle = SDL_CreateWindow(__name, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, __width, __height, __wF);
+    window.handle = SDL_CreateWindow(__name, __width, __height, __wF);
     if (!window.handle)
     {
         fprintf(stderr, "%s", SDL_GetError());
         return (_pWindow){0};
     }
 
-    window.renderer = SDL_CreateRenderer(window.handle, -1, __rF);
+    window.renderer = SDL_CreateRenderer(window.handle, NULL);
     if (!window.renderer)
     {
-        fprintf(stderr, "%s", SDL_GetError());
+        fprintf(stderr, "%s\n", SDL_GetError());
         return (_pWindow){0};
     }
 
-    SDL_RenderSetLogicalSize(window.renderer, __logicalWidth, __logicalHeight);
+    SDL_SetRenderLogicalPresentation(window.renderer, __logicalWidth, __logicalHeight, SDL_LOGICAL_PRESENTATION_STRETCH, SDL_SCALEMODE_NEAREST);
 
     return window; 
 }
@@ -77,5 +75,5 @@ void pWindowEndFrame(_pWindow *__window)
 void pRenderPixel(_pWindow *__window, _pVec2i __pos, _pRGBAColor __color)
 {
     SDL_SetRenderDrawColor(__window->renderer, __color.r, __color.g, __color.b, __color.a);
-    SDL_RenderDrawPointF(__window->renderer, __pos.x, __pos.y);
+    SDL_RenderPoint(__window->renderer, __pos.x, __pos.y);
 }

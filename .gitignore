@@ -54,3 +54,4 @@ dkms.conf
 # CMake & generic stuff
 build/
 deps/
+bin/

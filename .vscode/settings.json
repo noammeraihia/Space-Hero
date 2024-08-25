@@ -1,11 +1,7 @@
 {
     "files.associations": {
-        "*.h": "cpp",
-        "cstddef": "cpp",
-        "tuple": "cpp",
-        "type_traits": "cpp",
-        "utility": "cpp",
-        "chrono": "cpp",
-        "k": "c"
+        "sdl.h": "c",
+        "sdl_main.h": "c",
+        "p_utils.h": "c"
     }
 }

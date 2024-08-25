@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.30.0)
+cmake_minimum_required(VERSION 3.28.3)
 project(Noname)
 
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/lib)
@@ -14,4 +14,4 @@ file(GLOB MAIN_src
 
 add_executable(Noname ${MAIN_src})
 target_include_directories(Noname PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src/ ${CMAKE_CURRENT_SOURCE_DIR}/deps/)
-target_link_libraries(Noname PRIVATE SDL2::SDL2main SDL2::SDL2-static)
+target_link_libraries(Noname PRIVATE m SDL3::SDL3)
