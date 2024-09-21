@@ -1,7 +1,10 @@
 {
     "files.associations": {
-        "sdl.h": "c",
-        "sdl_main.h": "c",
-        "p_utils.h": "c"
+        "*.h": "c",
+        "*.c": "c",
+        "cstddef": "c",
+        "functional": "c",
+        "tuple": "c",
+        "type_traits": "c"
     }
 }

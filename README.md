@@ -1,2 +1,2 @@
-# padinspi
-A Doom-like FPS written in pure C with the SDL2 graphic's library
+# Space-Hero
+Fuck that shi let's make a game with spaceships and robots (in C of course)

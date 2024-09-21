@@ -5,6 +5,7 @@
 #include <math.h>
 
 #define P_PI 3.14159265358979f
+#define P_RAD P_PI / 180.f
 
 #define P_MATH_INIT_VECTOR_TYPE(__suffix, __type, ...)\
     typedef struct s_pVec##__suffix\

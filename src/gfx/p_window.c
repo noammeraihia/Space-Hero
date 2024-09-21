@@ -72,8 +72,14 @@ void pWindowEndFrame(_pWindow *__window)
 }
 
 
-void pRenderPixel(_pWindow *__window, _pVec2i __pos, _pRGBAColor __color)
+void pRenderPixel(_pWindow *__window, _pVec2f __pos, _pRGBAColor __color)
 {
     SDL_SetRenderDrawColor(__window->renderer, __color.r, __color.g, __color.b, __color.a);
     SDL_RenderPoint(__window->renderer, __pos.x, __pos.y);
+}
+
+void pRenderLine(_pWindow *__window, _pVec2f __startPos, _pVec2f __endPos, _pRGBAColor __color)
+{
+    SDL_SetRenderDrawColor(__window->renderer, __color.r, __color.g, __color.b, __color.a);
+    SDL_RenderLine(__window->renderer, __startPos.x, __startPos.y, __endPos.x, __endPos.y);
 }

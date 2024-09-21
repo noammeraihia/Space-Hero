@@ -34,6 +34,7 @@ b8 pWindowPollEvent(_pWindow *__window);
 const u8* pWindowBeginFrame(_pWindow *__window);
 void pWindowEndFrame(_pWindow *__window);
 
-void pRenderPixel(_pWindow *__window, _pVec2i __pos, _pRGBAColor __color);
+void pRenderPixel(_pWindow *__window, _pVec2f __pos, _pRGBAColor __color);
+void pRenderLine(_pWindow *__window, _pVec2f __startPos, _pVec2f __endPos, _pRGBAColor __color);
 
 #endif
